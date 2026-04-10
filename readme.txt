@@ -1,4 +1,4 @@
-đề tài : Xây dựng hệ thống tư vấn y tế thông minh sử dụng Chatbot A
+đề tài : Xây dựng hệ thống tư vấn y tế thông minh sử dụng Chatbot AI hỗ trợ y tế
 
 Sinh viên thực hiện : Dương Tuấn Kiệt
 Mã SV: 2224801030271
