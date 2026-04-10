@@ -1,0 +1,212 @@
+﻿@model WebAppYte.Models.DangNhap
+
+@{
+    ViewBag.Title = "Dangnhap";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+    var nd = Session["nguoidung"] as WebAppYte.Models.NguoiDung;
+    var googleClientId = System.Configuration.ConfigurationManager.AppSettings["GoogleClientId"];
+}
+
+<style>
+    body {
+        background-color: #F6F6F6;
+    }
+
+    .login-note-error {
+        color: red;
+    }
+
+    .login-note-success {
+        color: green;
+    }
+
+    .password-wrap {
+        position: relative;
+        max-width: 320px;
+        margin: 0 auto;
+    }
+
+        .password-wrap .form-control {
+            padding-right: 50px;
+        }
+
+    .toggle-password {
+        position: absolute;
+        right: -8px;
+        top: 50%;
+        transform: translateY(-50%);
+        cursor: pointer;
+        color: #5f6368;
+        font-size: 16px;
+        width: 34px;
+        height: 34px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        border-radius: 50%;
+        transition: 0.2s ease;
+        user-select: none;
+    }
+
+        .toggle-password:hover {
+            background-color: #f1f3f4;
+            color: #202124;
+        }
+
+    .google-login-wrap {
+        margin-top: 18px;
+        display: flex;
+        justify-content: center;
+    }
+
+    .google-login-note {
+        margin-top: 10px;
+        color: #666;
+        font-size: 13px;
+    }
+</style>
+
+<br />
+
+<div class="col-md-12">
+    @using (Html.BeginForm("Dangnhap", "Home", FormMethod.Post))
+    {
+        @Html.AntiForgeryToken()
+
+        <center>
+            <div>
+                <div class="form-horizontal">
+                    @{
+                        if (nd == null)
+                        {
+                            <h2>Đăng nhập tài khoản</h2>
+                        }
+                        else
+                        {
+                            <h3>Chúc mừng @nd.TaiKhoan đăng ký thành công. Đăng nhập ngay.</h3>
+                        }
+                    }
+
+                    <hr />
+                    @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+
+                    <div class="form-group">
+                        <h4>@Html.LabelFor(model => model.TaiKhoan)</h4>
+                        <div style="max-width:320px; margin:0 auto;">
+                            @Html.EditorFor(model => model.TaiKhoan, new
+                            {
+                                htmlAttributes = new
+                                {
+                                    @class = "form-control",
+                                    autocomplete = "username"
+                                }
+                            })
+                            @Html.ValidationMessageFor(model => model.TaiKhoan, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <div class="form-group">
+                        <h4>@Html.LabelFor(model => model.MatKhau)</h4>
+                        <div class="password-wrap">
+                            @Html.PasswordFor(model => model.MatKhau, new
+                            {
+                                @class = "form-control",
+                                id = "MatKhau",
+                                autocomplete = "current-password"
+                            })
+                            <span id="togglePassword" class="toggle-password" title="Hiện / Ẩn mật khẩu">&#128065;</span>
+                            @Html.ValidationMessageFor(model => model.MatKhau, "", new { @class = "text-danger" })
+                        </div>
+                    </div>
+
+                    <h5 class="login-note-error">@ViewBag.Fail</h5>
+
+                    @if (TempData["SuccessMessage"] != null)
+                    {
+                        <h5 class="login-note-success">@TempData["SuccessMessage"]</h5>
+                    }
+
+                    <div class="form-group">
+                        <div>
+                            <input type="submit" value="Đăng nhập" class="btn btn-success" />
+                        </div>
+                    </div>
+
+                    <div class="google-login-wrap">
+                        <div id="g_id_onload"
+                             data-client_id="@googleClientId"
+                             data-callback="handleGoogleCredential">
+                        </div>
+
+                        <div class="g_id_signin"
+                             data-type="standard"
+                             data-shape="pill"
+                             data-theme="outline"
+                             data-text="signin_with"
+                             data-size="large"
+                             data-logo_alignment="left">
+                        </div>
+                    </div>
+
+                    <div class="google-login-note">
+                        Hoặc đăng nhập nhanh bằng Google
+                    </div>
+
+                    <div style="margin-top: 14px;">
+                        Bạn chưa có tài khoản? @Html.ActionLink("ĐĂNG KÝ NGAY", "Dangky")
+                        <br />
+                        Bạn quên mật khẩu? @Html.ActionLink("QUÊN MẬT KHẨU", "QuenMatKhau", "Home")
+                    </div>
+                </div>
+            </div>
+        </center>
+    }
+</div>
+
+<script src="https://accounts.google.com/gsi/client" async defer></script>
+
+<script>
+    document.addEventListener("DOMContentLoaded", function () {
+        var passwordInput = document.getElementById("MatKhau");
+        var togglePassword = document.getElementById("togglePassword");
+
+        if (passwordInput && togglePassword) {
+            togglePassword.addEventListener("click", function () {
+                if (passwordInput.type === "password") {
+                    passwordInput.type = "text";
+                    togglePassword.innerHTML = "&#128584;";
+                } else {
+                    passwordInput.type = "password";
+                    togglePassword.innerHTML = "&#128065;";
+                }
+            });
+        }
+    });
+
+    function handleGoogleCredential(response) {
+        var token = response.credential;
+        var antiForgeryToken = document.querySelector('input[name="__RequestVerificationToken"]').value;
+
+        fetch('@Url.Action("GoogleLogin", "Home")', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json; charset=utf-8',
+                'RequestVerificationToken': antiForgeryToken
+            },
+            body: JSON.stringify({
+                Credential: token
+            })
+        })
+        .then(res => res.json())
+        .then(data => {
+            if (data.success) {
+                window.location.href = data.redirectUrl;
+            } else {
+                alert(data.message || "Đăng nhập Google thất bại.");
+            }
+        })
+        .catch(() => {
+            alert("Không thể kết nối máy chủ.");
+        });
+    }
+</script>

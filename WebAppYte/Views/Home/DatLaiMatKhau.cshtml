@@ -1,0 +1,136 @@
+﻿@{
+    ViewBag.Title = "Đặt lại mật khẩu";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<style>
+    body {
+        background: linear-gradient(135deg, #eef7ff, #f7fbff);
+    }
+
+    .reset-page {
+        min-height: 78vh;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding: 30px 15px;
+    }
+
+    .reset-card {
+        width: 100%;
+        max-width: 520px;
+        background: #ffffff;
+        border-radius: 20px;
+        box-shadow: 0 12px 35px rgba(17, 89, 160, 0.12);
+        overflow: hidden;
+        border: 1px solid #e4eef8;
+    }
+
+    .reset-header {
+        background: linear-gradient(135deg, #19a974, #28c76f);
+        color: white;
+        text-align: center;
+        padding: 28px 20px;
+    }
+
+        .reset-header h2 {
+            margin: 0;
+            font-size: 30px;
+            font-weight: 700;
+        }
+
+        .reset-header p {
+            margin: 8px 0 0;
+            font-size: 14px;
+            opacity: 0.95;
+        }
+
+    .reset-body {
+        padding: 28px;
+    }
+
+    .reset-label {
+        display: block;
+        margin-bottom: 8px;
+        font-weight: 600;
+        color: #24425c;
+    }
+
+    .reset-input {
+        width: 100%;
+        height: 48px;
+        border: 1px solid #cfe0ef;
+        border-radius: 12px;
+        padding: 12px 14px;
+        font-size: 15px;
+        outline: none;
+        transition: 0.25s ease;
+        margin-bottom: 18px;
+    }
+
+        .reset-input:focus {
+            border-color: #19a974;
+            box-shadow: 0 0 0 3px rgba(25, 169, 116, 0.12);
+        }
+
+    .reset-btn {
+        width: 100%;
+        border: none;
+        border-radius: 12px;
+        background: linear-gradient(135deg, #19a974, #28c76f);
+        color: white;
+        height: 48px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+        .reset-btn:hover {
+            background: linear-gradient(135deg, #14885d, #22b864);
+            color: white;
+        }
+
+    .reset-alert {
+        border-radius: 12px;
+        padding: 12px 14px;
+        margin-bottom: 18px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    .reset-alert-error {
+        background: #fff1f1;
+        color: #c0392b;
+        border: 1px solid #f3c0bc;
+    }
+</style>
+
+<div class="reset-page">
+    <div class="reset-card">
+        <div class="reset-header">
+            <h2>Đặt lại mật khẩu</h2>
+            <p>Nhập mật khẩu mới để hoàn tất quá trình khôi phục</p>
+        </div>
+
+        <div class="reset-body">
+            @if (ViewBag.Error != null)
+            {
+                <div class="reset-alert reset-alert-error">
+                    @ViewBag.Error
+                </div>
+            }
+
+            @using (Html.BeginForm("DatLaiMatKhau", "Home", FormMethod.Post))
+            {
+                @Html.AntiForgeryToken()
+
+                <label class="reset-label">Mật khẩu mới</label>
+                <input type="password" name="mk1" class="reset-input" placeholder="Nhập mật khẩu mới" required />
+
+                <label class="reset-label">Xác nhận mật khẩu mới</label>
+                <input type="password" name="mk2" class="reset-input" placeholder="Nhập lại mật khẩu mới" required />
+
+                <button type="submit" class="reset-btn">Đổi mật khẩu</button>
+            }
+        </div>
+    </div>
+</div>
