@@ -1,47 +1,69 @@
-đề tài : Xây dựng hệ thống tư vấn y tế thông minh sử dụng Chatbot AI hỗ trợ y tế
+🏥 HỆ THỐNG TƯ VẤN Y TẾ THÔNG MINH SỬ DỤNG CHATBOT AI
+📌 Giới thiệu đề tài
 
-Sinh viên thực hiện : Dương Tuấn Kiệt
-Mã SV: 2224801030271
-Sinh viên thực hiện : Đặng Minh Khôi
-Mã SV: 2224801030323
+Đề tài: Xây dựng hệ thống tư vấn y tế thông minh sử dụng Chatbot AI hỗ trợ y tế
 
-Ngôn ngữ : Asp.net mvc, sql server.
+Hệ thống được phát triển nhằm hỗ trợ người dùng tiếp cận thông tin y tế một cách nhanh chóng, chính xác và tiện lợi, đồng thời kết nối trực tiếp với bác sĩ thông qua nền tảng trực tuyến.
 
-- Mô tả hoạt động website
+👨‍💻 Thành viên thực hiện
+Dương Tuấn Kiệt – MSSV: 2224801030271
+Đặng Minh Khôi – MSSV: 2224801030323
+⚙️ Công nghệ sử dụng
+Ngôn ngữ: ASP.NET MVC
+Cơ sở dữ liệu: SQL Server
+Frontend: HTML, CSS, JavaScript
+Khác: Tích hợp Chatbot AI hỗ trợ tư vấn y tế
+🌐 Mô tả hệ thống
+🔹 1. Người dùng chưa đăng nhập (Khách)
+Xem số liệu Covid và tin tức y tế được cập nhật bởi quản trị viên
+Xem câu hỏi – trả lời giữa người dùng và bác sĩ
+Tra cứu trung tâm y tế gần nhất theo tỉnh/thành:
+Hiển thị danh sách bệnh viện/trung tâm
+Xem chi tiết từng cơ sở
 
-- Người dùng là khách ( chưa đăng nhập ) : 
-+ Có thể xem số liệu covid, tin tức covid về cách phòng tránh, tin mới
-tin tức được cập nhật hàng ngày bởi quản trị viên.
-+ Xem các câu hỏi và câu trả lời của những người dùng đã hỏi và bác sĩ đã trả lời.
-Muốn gửi câu hỏi mới phải đăng nhập tài khoản.
-+ Xem trung tâm y tế gần nhất : chọn tỉnh thành cần tra cứu. Bấm tra cứu- hiển thị danh sách
-trung tâm, bệnh viện. Bấm xem chi tiết sẽ hiển thị chi tiết.
+🔹 2. Người dùng đã đăng nhập
+(Tài khoản demo: Benhnhan / 123456)
+Xem và cập nhật hồ sơ cá nhân
+Xem lịch sử tư vấn
+Gửi câu hỏi mới và trò chuyện với bác sĩ
+Xem danh sách và thông tin bác sĩ
+📅 Đặt lịch tư vấn video
+Nhập nội dung, chọn bác sĩ, chọn thời gian
+Trạng thái ban đầu: Chờ xác nhận
+Sau khi được xác nhận:
+Hiển thị đếm ngược thời gian
+Khi đến giờ → xuất hiện link Zoom để tư vấn
+Sau khi kết thúc:
+Trạng thái: Đã tư vấn xong
+Bác sĩ cung cấp kết luận và ghi chú
+⏱️ Thời gian tối đa: 40 phút / buổi tư vấn
 
-- Người dùng đã đăng nhập : (tk: Benhnhan: mk 123456)
-+ Xem hồ sơ, cập nhật hồ sơ, xem lịch sử tư vấn.
-+ Có thể gửi câu hỏi mới, trò chuyện với bác sĩ, xem câu hỏi.
-+ Xem danh sách bác sĩ, thông tin bác sĩ.
-+ Đặt lịch tư vấn quá video:  Đặt lịch nhập nội dung, chọn bác sĩ, chọn thời gian bắt đầu.
-Bấm gửi - Lịch hẹn ở trạng thái chờ xác nhận. 
- * Khi đã được xác nhận - Trạng thái đã xác nhận được bật:
-Sẽ hiển thị đếm ngược thời gian cho người dùng. Khi đến thời gian tư vấn sẽ xuất hiện link zoom của bác sĩ.
-Nhấp vào link zoom để vào trò chuyện với bác sĩ.
-Khi tư vấn xong, sẽ có trạng thái đã tư vấn xong. Bác sĩ sẽ có kết luận, giải đáp về cuộc trò chuyện.
-Tối đa 40 phút 1 cuộc tư vấn.Khi tư vấn kết thúc sớm bác sĩ nhập thời gian kết thúc tư vấn
+🔹 3. Bác sĩ
+(Tài khoản demo: Bacsy / 123456)
+Được cấp tài khoản bởi quản trị viên
+Trả lời câu hỏi của người dùng
+Quản lý và xử lý lịch hẹn:
+Xác nhận / từ chối / đổi lịch
+Gửi thông báo đến bệnh nhân
+Ghi chú và kết luận sau mỗi buổi tư vấn
+Xử lý trường hợp trùng lịch
+Hỗ trợ nhắc lịch qua điện thoại/email
 
-
-- Bác sĩ : (tk: Bacsy: mk 123456)
-+ Được cấp tài khoản bởi người quản trị:
-Đăng nhập thành công sẽ có danh mục : Trả lời câu hỏi và Danh sách lịch hẹn.
-+ Trả lời giải đáp của người dùng
-+ Xác nhận lịch hẹn, có thể bấm đổi lịch hẹn/ từ chối lịch hẹn nhập nội dung để thông báo tới người dùng.
-+ Khi tư vấn xong sẽ nhập thời gian kết thúc cuộc trò chuyện và trả cho người dùng ghi chú về cuộc nói chuyện.
-+ Xử lí khi có nhiều lịch trùng : Sẽ từ chối, đổi lịch cho bệnh nhân khung giờ khác và thông báo đến cho bệnh nhân.
-+ Khi sắp đến giờ tư vấn sẽ có nhân viên trung tâm lên lạc số điện thoại và email của người dùng để thông báo lịch hẹn.
-
-
-- Người quản trị : (tk: admin: mk 123456)
-+ Quản lý chung hệ thống.
-+ Cập nhật tin tức, số liệu. Thêm mới bác sĩ, trung tâm y tế.
-
--KHÁC: WEB hỗ trợ tương thích với nhiều màn hình thiết bị. 
+🔹 4. Quản trị viên
+(Tài khoản demo: admin / 123456)
+Quản lý toàn bộ hệ thống
+Cập nhật tin tức và số liệu y tế
+Quản lý:
+Bác sĩ
+Trung tâm y tế
+Người dùng
+📱 Tính năng nổi bật
+Tích hợp Chatbot AI hỗ trợ tư vấn y tế
+Giao diện responsive, tương thích nhiều thiết bị
+Hệ thống đặt lịch và tư vấn trực tuyến
+Cập nhật dữ liệu y tế theo thời gian thực
+🚀 Hướng phát triển
+Nâng cấp Chatbot AI thông minh hơn
+Tích hợp thanh toán online
+Phát triển ứng dụng mobile
+Mở rộng dữ liệu và chuyên khoa
