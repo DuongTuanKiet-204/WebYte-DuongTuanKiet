@@ -5,40 +5,45 @@
     ViewBag.Title = "Index";
     Layout = "~/Views/Shared/_Layout.cshtml";
     var u = Session["user"] as WebAppYte.Models.NguoiDung;
+    int idNguoiDung = u != null ? u.IDNguoiDung : Convert.ToInt32(Session["IDNguoiDung"]);
 }
+
 <style type="text/css">
     .imgavt {
         margin-right: 15px;
     }
-</style>
 
+    .zoom-btn {
+        color: white !important;
+        text-decoration: none;
+    }
+</style>
 
 <h2>Lịch tư vấn của bạn</h2>
 <h4><i> Chú ý : Thời gian tư vấn tối đa cho mỗi lần tư vấn là : 40 phút</i></h4>
-
-
 
 <div>
     <button class="btn-default">
         <b>@Html.ActionLink("Đặt mới", "Create")</b>
     </button>
     <button class="btn-default">
-        <a href="@Url.Action("Dangxuly", "LichKham", new { id = u.IDNguoiDung  })">Đang xác nhận</a>
+        <a href="@Url.Action("Dangxuly", "LichKham", new { id = idNguoiDung })">Đang xác nhận</a>
     </button>
     <button class="btn-default">
-        <a href="@Url.Action("Daxacnhan", "LichKham", new { id = u.IDNguoiDung  })">Đã xác nhận</a>
+        <a href="@Url.Action("Daxacnhan", "LichKham", new { id = idNguoiDung })">Đã xác nhận</a>
     </button>
     <button class="btn-default">
-        <a href="@Url.Action("Datuvanxong", "LichKham", new { id = u.IDNguoiDung  })">Đã xong</a>
+        <a href="@Url.Action("Datuvanxong", "LichKham", new { id = idNguoiDung })">Đã xong</a>
     </button>
     <button class="btn-default">
-        <b> <a href="@Url.Action("lichhen", "LichKham")">Xem dạng lưới</a></b>
+        <b><a href="@Url.Action("lichhen", "LichKham")">Xem dạng lưới</a></b>
     </button>
 </div>
+
 <br />
+
 <div style="float:left">
     <div class="col-md-8">
-
 
         @foreach (var item in Model)
         {
@@ -49,52 +54,78 @@
             <h4>Hẹn vào lúc: @item.BatDau.Value.ToString("dd/MM/yyyy HH:mm:ss")</h4>
             <h4>Nội dung tư vấn : @item.ChuDe</h4>
 
+            if (item.TrangThai == 0)
             {
-                if (@item.TrangThai == 0)
+                <h5 style="color:blueviolet"> Đang chờ xác nhận. </h5>
+                <button>
+                    @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.IDLichKham })
+                </button>
+                <button>
+                    @Html.ActionLink("Xóa lịch", "Delete", new { id = item.IDLichKham })
+                </button>
+                <hr />
+            }
+            else if (item.TrangThai == 1)
+            {
+                <h5 style="color:red"> Đã xác nhận lịch </h5>
+
+                DateTime now = DateTime.Now;
+                DateTime bd = (DateTime)item.BatDau;
+                int sosanh = DateTime.Compare(now, bd);
+                TimeSpan i = bd.Subtract(now);
+
+                if (sosanh < 0)
                 {
-                    <h5 style="color:blueviolet"> Đang chờ xác nhận. </h5>
-                    <button>
-                        @Html.ActionLink("Chỉnh sửa", "Edit", new { id = item.IDLichKham })
-                    </button>
-                    <button>
-                        @Html.ActionLink("Xóa lịch", "Delete", new { id = item.IDLichKham })
-                    </button>
-                    <hr />
-                }
-                else if (@item.TrangThai == 1)
-                {
-                    <h5 style="color:red"> Đã xác nhận lịch </h5>
-                    DateTime now = DateTime.Now;
-                    DateTime bd = (DateTime)item.BatDau;
-                    int sosanh = DateTime.Compare(now, bd);
-                    TimeSpan i = bd.Subtract(now);
-                    if (sosanh < 0)
+                    <h4>Còn @i.Days ngày: @i.Hours giờ : @i.Minutes phút : @i.Seconds giây</h4>
+
+                    if (!string.IsNullOrEmpty(item.ZoomInfo))
                     {
-                        <h4>Còn @i.Days ngày: @i.Hours giờ : @i.Minutes phút :@i.Seconds giây</h4>
-                        <button class="btn-success"> Chưa đến giờ tư vấn</button>
-                        <hr />
+                        <h4>
+                            Link tư vấn:
+                            <button class="btn-info">
+                                <a href="@item.ZoomInfo" target="_blank" class="zoom-btn">THAM GIA ZOOM</a>
+                            </button>
+                        </h4>
                     }
                     else
                     {
-                        <h4>Link tư vấn: <button class="btn-info"><a href="@item.ZoomInfo" style="color:white"> BẮT ĐẦU CUỘC GỌI</a></button> </h4>
-                        <hr />
+                        <h4 style="color:red">Chưa có link Zoom</h4>
                     }
-                }
-                else if (@item.TrangThai == 2)
-                {
-                    <h5 style="color:red"> Đã tư vấn xong. </h5>
-                    //<h4>Kết thúc lúc: @item.KetThuc.Value.ToString("dd/MM/yyyy HH:mm:ss")</h4>
-                    <h4>Ghi chú tư vấn : @item.KetQuaKham</h4>
-                    <hr />
 
+                    <button class="btn-success"> Chưa đến giờ tư vấn</button>
+                    <hr />
                 }
                 else
                 {
-                    <h5 style="color:red"> Lỗi </h5>
-                }
+                    if (!string.IsNullOrEmpty(item.ZoomInfo))
+                    {
+                        <h4>
+                            Link tư vấn:
+                            <button class="btn-info">
+                                <a href="@item.ZoomInfo" target="_blank" class="zoom-btn">BẮT ĐẦU CUỘC GỌI</a>
+                            </button>
+                        </h4>
+                    }
+                    else
+                    {
+                        <h4 style="color:red">Chưa có link Zoom</h4>
+                    }
 
+                    <hr />
+                }
+            }
+            else if (item.TrangThai == 2)
+            {
+                <h5 style="color:red"> Đã tư vấn xong. </h5>
+                <h4>Ghi chú tư vấn : @item.KetQuaKham</h4>
+                <hr />
+            }
+            else
+            {
+                <h5 style="color:red"> Lỗi </h5>
             }
         }
+
         <br />
         <hr />
     </div>
@@ -105,10 +136,8 @@
     </div>
 </div>
 
-
-
 <br />
+
 Trang @(Model.PageCount < Model.PageNumber ? 0 : Model.PageNumber) / @Model.PageCount
 
-@Html.PagedListPager(Model, page => Url.Action("Index",
-    new { page }))
+@Html.PagedListPager(Model, page => Url.Action("Index", new { page }))

@@ -164,6 +164,7 @@
     <Compile Include="Controllers\HomeController.cs" />
     <Compile Include="Controllers\LichkhamController.cs" />
     <Compile Include="Controllers\NguoidungController.cs" />
+    <Compile Include="Controllers\NhatKySucKhoeController.cs" />
     <Compile Include="Controllers\TrungtamyteController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
@@ -176,6 +177,7 @@
     <Compile Include="Models\LichKham.cs" />
     <Compile Include="Models\modelWeb.cs" />
     <Compile Include="Models\NguoiDung.cs" />
+    <Compile Include="Models\NhatKySucKhoeViewModel.cs" />
     <Compile Include="Models\QuanTri.cs" />
     <Compile Include="Models\Solieucovid.cs" />
     <Compile Include="Models\sysdiagram.cs" />
@@ -1457,14 +1459,19 @@
     <Content Include="Views\Home\QuenMatKhau.cshtml" />
     <Content Include="Views\Home\NhapOTP.cshtml" />
     <Content Include="Views\Home\DatLaiMatKhau.cshtml" />
+    <Content Include="Views\NhatKySucKhoe\Index.cshtml" />
+    <Content Include="Views\NhatKySucKhoe\Create.cshtml" />
+    <Content Include="Views\NhatKySucKhoe\BacsiXem.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
     <Folder Include="Areas\Admin\Data\" />
+    <Folder Include="Areas\Admin\Views\NhatKySucKhoe\" />
     <Folder Include="images\files\" />
     <Folder Include="images\flash\" />
     <Folder Include="images\_thumbs\Files\" />
     <Folder Include="images\_thumbs\Images\" />
+    <Folder Include="Views\NhatKySucKhoeViewModel\" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

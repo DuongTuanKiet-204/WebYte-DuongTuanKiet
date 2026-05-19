@@ -1,0 +1,44 @@
+﻿@model List<WebAppYte.Models.NhatKySucKhoeViewModel>
+
+@{
+    ViewBag.Title = "Bác sĩ xem nhật ký";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+
+    var bn = ViewBag.BenhNhan as WebAppYte.Models.NguoiDung;
+}
+
+<h2>Nhật ký sức khỏe bệnh nhân</h2>
+
+@if (bn != null)
+{
+    <h4>Bệnh nhân: @bn.HoTen</h4>
+}
+
+<table class="table table-bordered">
+    <tr>
+        <th>Ngày nhập</th>
+        <th>Nhiệt độ</th>
+        <th>Triệu chứng</th>
+        <th>Mức độ mệt</th>
+        <th>Ghi chú</th>
+    </tr>
+
+    @foreach (var item in Model)
+    {
+        <tr>
+            <td>
+                @(item.NgayNhap.HasValue
+                    ? item.NgayNhap.Value.ToString("dd/MM/yyyy HH:mm")
+                    : "")
+            </td>
+
+            <td>@item.NhietDo °C</td>
+
+            <td>@item.TrieuChung</td>
+
+            <td>@item.MucDoMet /10</td>
+
+            <td>@item.GhiChu</td>
+        </tr>
+    }
+</table>
